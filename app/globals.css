@@ -1,0 +1,246 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ── Brand: VIP Black Diamond — Trust Navy × Gold ── */
+  --bg:           #07091f;
+  --surface:      #0d1230;
+  --surface-2:    #141a3d;
+  --text:         #f0f4fb;
+  --text-muted:   #7892b2;
+  --line:         rgba(201, 162, 39, 0.18);
+
+  /* Brand ramp */
+  --brand-400:    #3b7fc4;
+  --brand-500:    #1a52a0;
+  --brand-600:    #113680;
+
+  /* Gold accent */
+  --accent:       #c9a227;
+  --accent-light: #e8c95d;
+
+  /* Aurora (blends) */
+  --aurora-1:     rgba(26, 82, 160, 0.22);
+  --aurora-2:     rgba(201, 162, 39, 0.10);
+  --aurora-3:     rgba(59, 127, 196, 0.18);
+
+  --radius:       10px;
+  --grain-opacity: 0.032;
+}
+
+/* ── Reset & Base ── */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Grain overlay ── */
+.grain-overlay::before {
+  content: '';
+  position: fixed;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: var(--grain-opacity);
+  animation: grain 0.6s steps(1) infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Glassmorphism ── */
+.glass {
+  background: rgba(13, 18, 48, 0.55);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(201, 162, 39, 0.12);
+}
+
+.glass-strong {
+  background: rgba(13, 18, 48, 0.80);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid rgba(201, 162, 39, 0.20);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ── Glow ── */
+.glow-gold {
+  box-shadow: 0 0 60px -12px rgba(201, 162, 39, 0.4);
+}
+
+.glow-brand {
+  box-shadow: 0 0 50px -12px rgba(26, 82, 160, 0.5);
+}
+
+/* ── Text effects ── */
+.gradient-gold {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 50%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200%;
+  animation: shimmer 3s linear infinite;
+}
+
+.gradient-brand {
+  background: linear-gradient(135deg, var(--brand-400), var(--brand-500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Mesh / Aurora ── */
+.mesh-bg {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(at 15% 20%, var(--aurora-1) 0px, transparent 55%),
+    radial-gradient(at 85% 10%, var(--aurora-2) 0px, transparent 50%),
+    radial-gradient(at 60% 90%, var(--aurora-3) 0px, transparent 55%),
+    radial-gradient(at 40% 50%, rgba(201, 162, 39, 0.06) 0px, transparent 40%);
+}
+
+/* ── Shimmer button ── */
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 65%
+  );
+  background-size: 200%;
+  animation: shimmer 2.8s linear infinite;
+}
+
+/* ── Gold divider line ── */
+.gold-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--brand-500);
+  border-radius: 3px;
+  opacity: 0.6;
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ── Focus accessible ── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Reveal (scroll) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Card hover line ── */
+.card-hover {
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
+  pointer-events: none;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.card-hover:hover::before {
+  border-color: rgba(201, 162, 39, 0.3);
+}
+
+/* ── Keyframes ── */
+@keyframes aurora {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+@keyframes grain {
+  0%,100% { transform: translate(0,0); }
+  20% { transform: translate(2%,2%); }
+  40% { transform: translate(-2%,2%); }
+  60% { transform: translate(2%,-2%); }
+  80% { transform: translate(-1%,1%); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-gold {
+  0%,100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .grain-overlay::before,
+  .shimmer-btn::after,
+  .gradient-gold {
+    animation: none !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
